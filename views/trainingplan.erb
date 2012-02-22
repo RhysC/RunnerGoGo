@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 	<head>
-		<title></title>
+		<title>Your Training Plan</title>
+		<link rel="stylesheet" type="text/css" href="/style.css" />
 	</head>
 	<body>
 		<h1>
@@ -11,9 +12,13 @@
 			Marathon date : <%= @runnerdata.race_date.strftime('%a %d %b %Y') %>
 		</h3>
 		5km Race pace = <%= @runnerdata.five_km_pace.strftime("%M:%S")%> <br/>
-		Marathon Pace = <%= @runnerdata.marathon_pace.strftime("%M:%S")%>
+		Marathon Pace = <%= @runnerdata.marathon_pace.strftime("%M:%S")%> <br/>
+		Short Tempo Pace = <%= @runnerdata.short_tempo_pace.strftime("%M:%S")%> <br/>
+		Medium Tempo Pace = <%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> <br/>
+		Long Tempo Pace = <%= @runnerdata.long_tempo_pace.strftime("%M:%S")%> <br/>
+		Easy Tempo Pace = <%= @runnerdata.easy_pace.strftime("%M:%S")%> 
 		<table>
-			<tr>
+			<thead>
 				<th>
 					Week (ending)
 				</th>
@@ -26,17 +31,17 @@
 				<th>
 					Run 3 - Distance
 				</th>
-			</tr>
+			</thead>
 			<tr>
 				<td>
 					Week 16<br/>
 					(<%= (@runnerdata.race_date - (15*7)).strftime('%d %b %Y') %>)
 				</td>
 				<td>
-					10-20 minute warm-up 3 x 1600m (1min. RI) 10 minute cool-down
+					10-20 minute warm-up <br/>3 x 1600m (1min. RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					9K run; 3K easy, 3K @ ST pace, 3K easy
+					9K run; <br/>3K easy, 3K @ ST pace (<%= @runnerdata.short_tempo_pace.strftime("%M:%S")%> sec/km), 3K easy
 				</td>
 				<td>
 					21K @ MP + 19 sec/km (<%= (@runnerdata.marathon_pace + 19).strftime("%M:%S")%> sec/km)
@@ -48,10 +53,10 @@
 					(<%= (@runnerdata.race_date - (14*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					1600m warm-up, 4 x 800m (2 min. RI) 10 minute cool-down
+					1600m warm-up, <br/>4 x 800m (2 min. RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					11K run; 1.5K easy, 8K @ MP, 1.5K easy
+					11K run; <br/>1.5K easy, 8K @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km), 1.5K easy
 				</td>
 				<td>
 					24K @ MP + 28 sec/km (<%= (@runnerdata.marathon_pace + 28).strftime("%M:%S")%> sec/km)
@@ -63,10 +68,10 @@
 					(<%= (@runnerdata.race_date - (13*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up, 1200, 1000, 800, 600, 400, 200 (all with 200m RI),10 minute cool-down
+					10-20 minute warm-up, <br/>1200, 1000, 800, 600, 400, 200 (all with 200m RI),<br/>10 minute cool-down
 				</td>
 				<td>
-					11K run; 1.5K easy, 8K @LT pace, 1.5K easy
+					11K run; <br/>1.5K easy, 8K @ LT pace (<%= @runnerdata.long_tempo_pace.strftime("%M:%S")%> sec/km), 1.5K easy
 				</td>
 				<td>
 					27K @ MP + 28 sec/km (<%= (@runnerdata.marathon_pace + 28).strftime("%M:%S")%> sec/km)
@@ -78,10 +83,10 @@
 					(<%= (@runnerdata.race_date - (12*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 5 x 1K (400m RI), 10 minute cool-down
+					10-20 minute warm-up <br/>5 x 1K (400m RI), <br/>10 minute cool-down
 				</td>
 				<td>
-					11K run; 1.5K easy, 7K @ MT pace, 1.5K easy
+					11K run; <br/>1.5K easy, 7K @ MT pace (<%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> sec/km), 1.5K easy
 				</td>
 				<td>
 					32K @ MP + 37 sec/km (<%= (@runnerdata.marathon_pace + 37).strftime("%M:%S")%> sec/km)
@@ -93,10 +98,10 @@
 					(<%= (@runnerdata.race_date - (11*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 3 x 1600m (1 min. RI) 10 minute cool-down
+					10-20 minute warm-up <br/>3 x 1600m (1 min. RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					10K run; 3K easy, 5K @ ST pace, 2K easy
+					10K run; <br/>3K easy, 5K @ ST pace (<%= @runnerdata.short_tempo_pace.strftime("%M:%S")%> sec/km), 2K easy
 				</td>
 				<td>
 					29K @ MP + 28 sec/km (<%= (@runnerdata.marathon_pace + 28).strftime("%M:%S")%> sec/km)
@@ -108,10 +113,10 @@
 					(<%= (@runnerdata.race_date - (10*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 2 x 1200m (2 min. RI); 4 x 800m (2 min. RI) 10 minute cool-down
+					10-20 minute warm-up <br/>2 x 1200m (2 min. RI); 4 x 800m (2 min. RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					8K run @ MT pace
+					8K run @ MT pace (<%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> sec/km)
 				</td>
 				<td>
 					32K @ MP + 28 sec/km (<%= (@runnerdata.marathon_pace + 28).strftime("%M:%S")%> sec/km)
@@ -123,10 +128,10 @@
 					(<%= (@runnerdata.race_date - (9*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 6 x 800m (1:30 RI), 10 minute cool-down
+					10-20 minute warm-up <br/>6 x 800m (1:30 RI), <br/>10 minute cool-down
 				</td>
 				<td>
-					13K run; 1.5K easy, 10K @ LT pace, 1.5K easy
+					13K run; <br/>1.5K easy, 10K @ LT pace (<%= @runnerdata.long_tempo_pace.strftime("%M:%S")%> sec/km), 1.5K easy
 				</td>
 				<td>
 					21K @ MP + 9 sec/km (<%= (@runnerdata.marathon_pace + 9).strftime("%M:%S")%> sec/km)
@@ -138,10 +143,10 @@
 					(<%= (@runnerdata.race_date - (8*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 2 x (6 x 400m) (1:30 RI) (2:30 RI between sets) 10 minute cool-down
+					10-20 minute warm-up <br/>2 x (6 x 400m) (1:30 RI) (2:30 RI between sets) <br/>10 minute cool-down
 				</td>
 				<td>
-					10K run; 3K easy, 5K @ ST pace, 2K easy
+					10K run; <br/>3K easy, 5K @ ST pace (<%= @runnerdata.short_tempo_pace.strftime("%M:%S")%> sec/km), 2K easy
 				</td>
 				<td>
 					29K @ MP + 19 sec/km (<%= (@runnerdata.marathon_pace + 19).strftime("%M:%S")%> sec/km)
@@ -153,10 +158,10 @@
 					(<%= (@runnerdata.race_date - (7*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 1600 m (400m RI), 3200m (800m RI), 2 x 800m (400m RI) 10 minute cool-down
+					10-20 minute warm-up <br/>1600 m (400m RI), 3200m (800m RI), 2 x 800m (400m RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					10K run; 1.5K easy, 7K @ MT pace, 1.5K easy
+					10K run; <br/>1.5K easy, 7K @ MT pace (<%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> sec/km), 1.5K easy
 				</td>
 				<td>
 					32K @ MP + 19 sec/km (<%= (@runnerdata.marathon_pace + 19).strftime("%M:%S")%> sec/km)
@@ -168,10 +173,10 @@
 					(<%= (@runnerdata.race_date - (6*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up, 3 x (2 x1200m) (2 min. RI) (4 min. between sets) 10 minute cool-down
+					10-20 minute warm-up, <br/>3 x (2 x1200m) (2 min. RI) (4 min. between sets) <br/>10 minute cool-down
 				</td>
 				<td>
-					16K run @ MP
+					16K run @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
 				</td>
 				<td>
 					24K @ MP + 12 sec/km (<%= (@runnerdata.marathon_pace + 12).strftime("%M:%S")%> sec/km)
@@ -183,10 +188,10 @@
 					(<%= (@runnerdata.race_date - (5*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 1K, 2K, 1K, 1K (400m RI) 10 minute cool-down
+					10-20 minute warm-up <br/>1K, 2K, 1K, 1K (400m RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					10K run; 2K easy, 8K @ MT pace
+					10K run; <br/>2K easy, 8K @ MT pace (<%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> sec/km)
 				</td>
 				<td>
 					32K MP + 19 sec/km (<%= (@runnerdata.marathon_pace + 19).strftime("%M:%S")%> sec/km)
@@ -198,10 +203,10 @@
 					(<%= (@runnerdata.race_date - (4*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 3 x 1600m (400m RI) 10 minute cool-down
+					10-20 minute warm-up <br/>3 x 1600m (400m RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					16K run @ MP
+					16K run @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
 				</td>
 				<td>
 					24K @ MP + 6 sec/km (<%= (@runnerdata.marathon_pace + 6).strftime("%M:%S")%> sec/km)
@@ -213,10 +218,10 @@
 					(<%= (@runnerdata.race_date - (3*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 10 x 400m (400m RI) 10 minute cool-down
+					10-20 minute warm-up <br/>10 x 400m (400m RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					13K run @ MP
+					13K run @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
 				</td>
 				<td>
 					32K @ MP + 9 sec/km (<%= (@runnerdata.marathon_pace + 9).strftime("%M:%S")%> sec/km)
@@ -228,10 +233,10 @@
 					(<%= (@runnerdata.race_date - (2*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 8 x 800m (1:30 RI) 10 minute cool-down
+					10-20 minute warm-up <br/>8 x 800m (1:30 RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					8K run @ MT pace
+					8K run @ MT pace (<%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> sec/km)
 				</td>
 				<td>
 					1K @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
@@ -243,10 +248,10 @@
 					(<%= (@runnerdata.race_date - (1*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 5 x 1K (400m RI) 10 minute cool-down
+					10-20 minute warm-up <br/>5 x 1K (400m RI) <br/>10 minute cool-down
 				</td>
 				<td>
-					10K run; 3K easy, 5K @ ST pace, 2K easy
+					10K run; <br/>3K easy, 5K @ ST pace (<%= @runnerdata.short_tempo_pace.strftime("%M:%S")%> sec/km), 2K easy
 				</td>
 				<td>
 					16K @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
@@ -258,7 +263,7 @@
 					(<%= (@runnerdata.race_date - (0*7)).strftime('%d %b %Y')  %>)
 				</td>
 				<td>
-					10-20 minute warm-up 6 x 400m (400m RI) 10 minute cool-down
+					10-20 minute warm-up <br/>6 x 400m (400m RI) <br/>10 minute cool-down
 				</td>
 				<td>
 					5K run @ MP (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
@@ -269,7 +274,7 @@
 			</tr>
 		</table>
 		<p>
-			Times are based on the pace of a 5km race at the given pace :<%= @runnerdata.five_km_pace %>
+			Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%S") %>
 		</p>
 	</body>
 </html>
