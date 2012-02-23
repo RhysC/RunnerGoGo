@@ -1,9 +1,9 @@
 require 'date'
-require './pace_time.rb'
-require './EasyPace.rb'
-require './ShortPace.rb'
-require './MediumPace.rb'
-require './LongPace.rb'
+require './PaceHashes/MarathonPace.rb'
+require './PaceHashes/EasyPace.rb'
+require './PaceHashes/ShortPace.rb'
+require './PaceHashes/MediumPace.rb'
+require './PaceHashes/LongPace.rb'
 
 class RunnerData
  attr_reader :race_date
@@ -23,7 +23,7 @@ class RunnerData
    rounding = fivekmseconds % 5 
    key = (fivekmseconds + (5-rounding))
    
-   mp_in_sec = PaceTime.MarathonPace()[key]
+   mp_in_sec = MarathonPaceTime.MarathonPace()[key]
    @marathon_pace = Time.at(mp_in_sec).gmtime
    
    easy_in_sec = EasyPaceTime.EasyPace()[key]

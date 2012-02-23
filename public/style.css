@@ -3,7 +3,7 @@ html, body, form, fieldset, h1, h2, h3, h4, h5, h6, p, pre, blockquote, ul, ol, 
 	padding:0;*/
 		}
 body {
-	background: #fff url(graphics/bg-body.gif) repeat-x;
+	background: #fff; /*url(graphics/bg-body.gif) repeat-x;*/
 	font:76%/160% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
 	}
 p {

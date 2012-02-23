@@ -3,7 +3,7 @@ require 'sinatra'
 require 'date'
 require './runner_data.rb'
 
-get '/plan/racedate/:racedate/fivekmtime/:fivekmtime' do 
+get '/racedate/:racedate/fivekmtime/:fivekmtime' do 
   
   # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
   date = Date.parse(params[:racedate]) #1979-12-27

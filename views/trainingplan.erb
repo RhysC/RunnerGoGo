@@ -9,14 +9,50 @@
 			Your training plan
 		</h1>
 		<h3>
-			Marathon date : <%= @runnerdata.race_date.strftime('%a %d %b %Y') %>
+			Marathon date : <%= @runnerdata.race_date.strftime('%a %d %b %Y') %> 
 		</h3>
-		5km Race pace = <%= @runnerdata.five_km_pace.strftime("%M:%S")%> <br/>
-		Marathon Pace = <%= @runnerdata.marathon_pace.strftime("%M:%S")%> <br/>
-		Short Tempo Pace = <%= @runnerdata.short_tempo_pace.strftime("%M:%S")%> <br/>
-		Medium Tempo Pace = <%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> <br/>
-		Long Tempo Pace = <%= @runnerdata.long_tempo_pace.strftime("%M:%S")%> <br/>
-		Easy Tempo Pace = <%= @runnerdata.easy_pace.strftime("%M:%S")%> 
+		<table>
+			<thead>
+				<th>
+					Marathon Pace
+				</th>
+				<th>
+					Long Tempo Pace
+				</th>
+				<th>
+					Medium Tempo Pace
+				</th>
+				<th>
+					Short Tempo Pace
+				</th>
+				<th>
+					Easy Pace 
+				</th>
+			</thead>
+			<tr>
+				<td>
+					<%= @runnerdata.marathon_pace.strftime("%M:%S")%>
+				</td>
+				<td>
+					<%= @runnerdata.long_tempo_pace.strftime("%M:%S")%>
+				</td>
+				<td>
+					<%= @runnerdata.medium_tempo_pace.strftime("%M:%S")%> 
+				</td>
+				<td>
+					<%= @runnerdata.short_tempo_pace.strftime("%M:%S")%>
+				</td>
+				<td>
+					<%= @runnerdata.easy_pace.strftime("%M:%S")%> 
+				</td>
+			</tr>
+			<tfoot>
+				<th colspan="5">
+					Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%S") %>
+				</th>
+			</tfoot>
+		</table>
+		
 		<table>
 			<thead>
 				<th>
@@ -272,9 +308,11 @@
 					42.2K @ Marathon Pace (<%= (@runnerdata.marathon_pace).strftime("%M:%S")%> sec/km)
 				</td>
 			</tr>
+			<tfoot>
+				<th colspan="4">
+					Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%S") %>
+				</th>
+			</tfoot>
 		</table>
-		<p>
-			Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%S") %>
-		</p>
 	</body>
 </html>
