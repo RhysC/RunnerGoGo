@@ -7,21 +7,15 @@ require './PaceHashes/LongPace.rb'
 
 class RunnerData
  attr_reader :race_date
- attr_reader :five_km_time
- attr_reader :five_km_pace
- attr_reader :marathon_pace
- attr_reader :short_tempo_pace
- attr_reader :medium_tempo_pace
- attr_reader :long_tempo_pace
- attr_reader :easy_pace
+ attr_reader :five_km_time, :five_km_pace
+ attr_reader :marathon_pace, :short_tempo_pace, :medium_tempo_pace, :long_tempo_pace, :easy_pace, :pace_hash
+ attr_reader :weeks
  def initialize(racedate, fivekmtime)
    @race_date = racedate
    @five_km_time = fivekmtime
-   fivekmseconds =  five_km_time.to_i
-   seconds =  (fivekmseconds / 5)
-   @five_km_pace = Time.at(seconds).gmtime
-   rounding = fivekmseconds % 5 
-   key = (fivekmseconds + (5-rounding))
+   @five_km_pace = Time.at(five_km_time.to_i / 5).gmtime
+   rounding = five_km_time.to_i % 5 
+   key = (five_km_time.to_i + (5-rounding))
    
    mp_in_sec = MarathonPaceTime.MarathonPace()[key]
    @marathon_pace = Time.at(mp_in_sec).gmtime
@@ -37,15 +31,126 @@ class RunnerData
    
    long_in_sec = LongPaceTime.LongPace()[key]
    @long_tempo_pace = Time.at(long_in_sec).gmtime
+
+   @pace_hash = { "easy"=> @easy_pace, 
+                  "ST"  => @short_tempo_pace, 
+                  "MT"  => @medium_tempo_pace, 
+                  "LT"  => @long_tempo_pace, 
+                  "MP"  => @marathon_pace}
+
+   @weeks = Array.new()
+   session16a = ["10-20 minute warm-up", "3 x 1600m (1min. RI)", "10 minute cool-down"]
+   session16b = create_tempo_session 3, 3, "ST", 0, 3
+   session16c = create_tempo_session 0, 21, "MP", 19, 0
+   @weeks << Week.new(racedate, 16, session16a, session16b, session16c)
+
+   session15a = ["1600m warm-up", "4 x 800m (2 min. RI)", "10 minute cool-down"]
+   session15b = create_tempo_session 1.5, 8, "MP", 0, 1.5 
+   session15c = create_tempo_session 0, 24, "MP", 28, 0 
+   @weeks << Week.new(racedate, 15, session15a, session15b, session15c)
+
+   session14a = ["10-20 minute warm-up", "1200, 1000, 800, 600, 400, 200 (all with 200m RI)", "10 minute cool-down"]
+   session14b = create_tempo_session 1.5, 8, "LT", 0, 1.5
+   session14c = create_tempo_session 0, 27, "MP", 28, 0 
+   @weeks << Week.new(racedate, 14, session14a, session14b, session14c)
+
+   session13a = ["10-20 minute warm-up","5 x 1K (400m RI)", "10 minute cool-down"]
+   session13b = create_tempo_session 1.5, 7, "MT", 0, 1.5
+   session13c = create_tempo_session 0, 32, "MP", 37, 0
+   @weeks << Week.new(racedate, 13, session13a, session13b, session13c)
+
+   session12a = ["10-20 minute warm-up","3 x 1600m (1 min. RI)", "10 minute cool-down"]
+   session12b = create_tempo_session 3, 5, "ST", 0, 2
+   session12c = create_tempo_session 0, 29, "MP", 28, 0
+   @weeks << Week.new(racedate, 12, session12a, session12b, session12c)
+
+   session11a = ["10-20 minute warm-up","2 x 1200m (2 min. RI); 4 x 800m (2 min. RI)", "10 minute cool-down"]
+   session11b = create_tempo_session 0, 8, "MT", 0, 0
+   session11c = create_tempo_session 0, 32, "MP", 28, 0
+   @weeks << Week.new(racedate, 11, session11a, session11b, session11c)
+   
+   session10a = ["10-20 minute warm-up","6 x 800m (1:30 RI)", "10 minute cool-down"]
+   session10b = create_tempo_session 1.5, 10, "LT", 0, 1.5
+   session10c = create_tempo_session 0, 21, "MP", 9, 0
+   @weeks << Week.new(racedate, 10, session10a, session10b, session10c)
+
+   session9a = ["10-20 minute warm-up","2 x (6 x 400m) (1:30 RI) (2:30 RI between sets)", "10 minute cool-down"]
+   session9b = create_tempo_session 3, 5, "ST", 0, 2
+   session9c = create_tempo_session 0, 29, "MP", 19, 0
+   @weeks << Week.new(racedate, 9, session9a, session9b, session9c)
+   
+   session8a = ["10-20 minute warm-up","1600 m (400m RI), 3200m (800m RI), 2 x 800m (400m RI)", "10 minute cool-down"]
+   session8b = create_tempo_session 1.5, 7, "MT", 0, 1.5
+   session8c = create_tempo_session 0, 32, "MP", 19, 0
+   @weeks << Week.new(racedate, 8, session8a, session8b, session8c)
+
+   session7a = ["10-20 minute warm-up","3 x (2 x1200m) (2 min. RI) (4 min. between sets) ", "10 minute cool-down"]
+   session7b = create_tempo_session 0, 16, "MP", 0, 0
+   session7c = create_tempo_session 0, 24, "MP", 12, 0
+   @weeks << Week.new(racedate, 7, session7a, session7b, session7c)
+
+   session6a = ["10-20 minute warm-up","1K, 2K, 1K, 1K (400m RI)", "10 minute cool-down"]
+   session6b = create_tempo_session 2, 8, "MT", 0, 0
+   session6c = create_tempo_session 0, 32, "MP", 19, 0
+   @weeks << Week.new(racedate, 6, session6a, session6b, session6c)
+
+   session5a = ["10-20 minute warm-up","3 x 1600m (400m RI)", "10 minute cool-down"]
+   session5b = create_tempo_session 0, 16, "MP", 0, 0
+   session5c = create_tempo_session 0, 24, "MP", 6, 0
+   @weeks << Week.new(racedate, 5, session5a, session5b, session5c)
+
+   session4a = ["10-20 minute warm-up","10 x 400m (400m RI)", "10 minute cool-down"]
+   session4b = create_tempo_session 0, 13, "MP", 0, 0
+   session4c = create_tempo_session 0, 32, "MP", 9, 0
+   @weeks << Week.new(racedate, 4, session4a, session4b, session4c)
+
+   session3a = ["10-20 minute warm-up","8 x 800m (1:30 RI)", "10 minute cool-down"]
+   session3b = create_tempo_session 0, 8, "MT", 0, 0
+   session3c = create_tempo_session 0, 1, "MP", 9, 0
+   @weeks << Week.new(racedate, 3, session3a, session3b, session3c)
+
+   session2a = ["10-20 minute warm-up","5 x 1K (400m RI)", "10 minute cool-down"]
+   session2b = create_tempo_session 3, 5, "ST", 0, 2
+   session2c = create_tempo_session 0, 16, "MP", 0, 0
+   @weeks << Week.new(racedate, 2, session2a, session2b, session2c)
+
+   session1a = ["10-20 minute warm-up","6 x 400m (400m RI)", "10 minute cool-down"]
+   session1b = create_tempo_session 0, 5, "MP", 0, 0
+   session1c = create_tempo_session 0, 42, "MP", 0, 0
+   @weeks << Week.new(racedate, 1, session1a, session1b, session1c)
+
  end
  
- def ShortTempoPace
-   return "4m15s/km"
+ def session_definitions
+    return ["Run 1 - Intervals ","Run 2 - Tempo ","Run 3 - Distance" ]
  end
- def MediumTempoPace
-   return "4m35s/km"
+ 
+ def create_tempo_session(warmup_dist, working_dist, working_pace_key, modifier, warmdown_dist)
+    currentSession = Array.new
+    currentSession << "#{warmup_dist}K easy" if warmup_dist > 0
+    modifier_string = if modifier > 0
+                        " + #{modifier.to_s} sec/km"
+                      end
+    currentSession << "#{working_dist}K @ #{working_pace_key}#{modifier_string} (#{ (@marathon_pace + modifier).strftime('%M:%S') } sec/km)"
+    currentSession << "#{warmup_dist}K easy" if warmdown_dist > 0
+    return currentSession
  end
- def LongTempoPace
-   return "4m55s/km"
- end
+ 
+ private :create_tempo_session
+ 
+end
+
+class Week 
+  attr_reader :week_number, :week_ended
+  attr_reader :session_one, :session_two, :session_three
+  def initialize(race_date, week_number, session_one, session_two, session_three )
+    @week_number = week_number
+    @week_ended =  (race_date - ((week_number - 1 )*7))
+    @session_one = session_one
+    @session_two = session_two
+    @session_three = session_three
+  end
+  def sessions
+    return [@session_one, @session_two, @session_three]
+  end
 end
