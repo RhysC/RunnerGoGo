@@ -8,30 +8,39 @@ require './PaceHashes/LongPace.rb'
 class RunnerData
  attr_reader :race_date
  attr_reader :five_km_time, :five_km_pace
- attr_reader :marathon_pace, :short_tempo_pace, :medium_tempo_pace, :long_tempo_pace, :easy_pace, :pace_hash
+ attr_reader :marathon_pace, :short_tempo_pace, :medium_tempo_pace, :long_tempo_pace, :easy_pace, :pace_hash, :marathon_prediction
  attr_reader :weeks
  def initialize(racedate, fivekmtime)
+   puts "racedate #{racedate}"
+   puts "fivekmtime #{fivekmtime}"
    @race_date = racedate
    @five_km_time = fivekmtime
    @five_km_pace = Time.at(five_km_time.to_i / 5).gmtime
    rounding = five_km_time.to_i % 5 
    key = (five_km_time.to_i + (5-rounding))
-   
+   puts "key = #{key}"
    mp_in_sec = MarathonPaceTime.MarathonPace()[key]
-   @marathon_pace = Time.at(mp_in_sec).gmtime
+   puts "marathon pace #{mp_in_sec}"
    
    easy_in_sec = EasyPaceTime.EasyPace()[key]
-   @easy_pace = Time.at(easy_in_sec).gmtime
+   puts "easy pace #{easy_in_sec}"
    
    short_in_sec = ShortPaceTime.ShortPace()[key]
-   @short_tempo_pace = Time.at(short_in_sec).gmtime
-   
+   puts "short tempo pace #{short_in_sec}"
+  
    med_in_sec =  MediumPaceTime.MediumPace()[key]
-   @medium_tempo_pace = Time.at(med_in_sec).gmtime
+   puts "med tempo pace #{med_in_sec}"
    
    long_in_sec = LongPaceTime.LongPace()[key]
+   puts "long run pace #{long_in_sec}"
+   
+   @marathon_pace = Time.at(mp_in_sec).gmtime
+   @easy_pace = Time.at(easy_in_sec).gmtime
+   @short_tempo_pace = Time.at(short_in_sec).gmtime
+   @medium_tempo_pace = Time.at(med_in_sec).gmtime
    @long_tempo_pace = Time.at(long_in_sec).gmtime
-
+   @marathon_prediction = Time.at(mp_in_sec * 42.2).gmtime
+   puts "marathon_prediction #{@marathon_prediction}"
    @pace_hash = { "easy"=> @easy_pace, 
                   "ST"  => @short_tempo_pace, 
                   "MT"  => @medium_tempo_pace, 

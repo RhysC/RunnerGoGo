@@ -3,6 +3,10 @@ require 'sinatra'
 require 'date'
 require './runner_data.rb'
 
+get '/' do
+  erb :home
+end
+
 get '/racedate/:racedate/fivekmtime/:fivekmtime' do 
   
   # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
@@ -12,9 +16,7 @@ get '/racedate/:racedate/fivekmtime/:fivekmtime' do
   mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
   sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
   @runnerdata = RunnerData.new(date, Time.at((mins*60)+sec).gmtime)
+  puts " runnerdata marathon_prediction #{@runnerdata.marathon_prediction}"
+  
   erb :trainingplan
-end
-
-get '/' do
-  erb :home
 end

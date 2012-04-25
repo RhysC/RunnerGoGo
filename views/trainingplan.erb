@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Your Training Plan</title>
-		<link rel="stylesheet" type="text/css" href="/style.css" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	</head>
 	<body>
 		<h1>
@@ -48,7 +48,7 @@
 			</tr>
 			<tfoot>
 				<th colspan="5">
-					Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%S") %>
+					Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%Ss") %> per km
 				</th>
 			</tfoot>
 		</table>
@@ -79,7 +79,9 @@
 			<% end %>
 			<tfoot>
 				<th colspan="4">
-					Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%S") %>
+					Times are based on the pace of a 5km race at the given pace <%= @runnerdata.five_km_pace.strftime("%M:%Ss") %> per km
+				<br/>
+					Predicted marathon time is <%= @runnerdata.marathon_prediction.strftime("%H:%M:%S") %>
 				</th>
 			</tfoot>
 		</table>
