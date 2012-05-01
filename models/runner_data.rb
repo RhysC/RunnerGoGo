@@ -1,9 +1,10 @@
 require 'date'
-require './PaceHashes/MarathonPace.rb'
-require './PaceHashes/EasyPace.rb'
-require './PaceHashes/ShortPace.rb'
-require './PaceHashes/MediumPace.rb'
-require './PaceHashes/LongPace.rb'
+require_relative '../PaceHashes/MarathonPace.rb'
+require_relative '../PaceHashes/EasyPace.rb'
+require_relative '../PaceHashes/ShortPace.rb'
+require_relative '../PaceHashes/MediumPace.rb'
+require_relative '../PaceHashes/LongPace.rb'
+require_relative 'week.rb'
 
 class RunnerData
  attr_reader :race_date
@@ -152,17 +153,3 @@ class RunnerData
  
 end
 
-class Week 
-  attr_reader :week_number, :week_ended
-  attr_reader :session_one, :session_two, :session_three
-  def initialize(race_date, week_number, session_one, session_two, session_three )
-    @week_number = week_number
-    @week_ended =  (race_date - ((week_number - 1 )*7))
-    @session_one = session_one
-    @session_two = session_two
-    @session_three = session_three
-  end
-  def sessions
-    return [@session_one, @session_two, @session_three]
-  end
-end
