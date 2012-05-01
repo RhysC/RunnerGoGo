@@ -1,4 +1,7 @@
 class MarathonPaceTime
+  #some pretty wierd data... the curve seems to change direction at the start ie the pace is relatively fatster in 905 than 900 and continues to be fast till 990 where the relative pace slows
+  #to see this effect:
+  #MarathonPaceTime.MarathonPace.keys.map {|key| MarathonPaceTime.MarathonPace[key] / (key/5.0) }
   def self.MarathonPace
     return Hash[
       900,207,

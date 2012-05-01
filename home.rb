@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'date'
-require './runner_data.rb'
+require_relative './models/runner_data.rb'
 
 get '/' do
   erb :home

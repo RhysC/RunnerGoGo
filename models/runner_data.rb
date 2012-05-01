@@ -1,15 +1,12 @@
 require 'date'
 require_relative '../PaceHashes/MarathonPace.rb'
-require_relative '../PaceHashes/EasyPace.rb'
-require_relative '../PaceHashes/ShortPace.rb'
-require_relative '../PaceHashes/MediumPace.rb'
-require_relative '../PaceHashes/LongPace.rb'
 require_relative 'week.rb'
+require_relative 'marathon_training_pace.rb'
 
 class RunnerData
  attr_reader :race_date
  attr_reader :five_km_time, :five_km_pace
- attr_reader :marathon_pace, :short_tempo_pace, :medium_tempo_pace, :long_tempo_pace, :easy_pace, :pace_hash, :marathon_prediction
+ attr_reader :pace, :pace_hash, :marathon_prediction
  attr_reader :weeks
  def initialize(racedate, fivekmtime)
    puts "racedate #{racedate}"
@@ -17,36 +14,17 @@ class RunnerData
    @race_date = racedate
    @five_km_time = fivekmtime
    @five_km_pace = Time.at(five_km_time.to_i / 5).gmtime
-   rounding = five_km_time.to_i % 5 
-   key = (five_km_time.to_i + (5-rounding))
-   puts "key = #{key}"
-   mp_in_sec = MarathonPaceTime.MarathonPace()[key]
-   puts "marathon pace #{mp_in_sec}"
-   
-   easy_in_sec = EasyPaceTime.EasyPace()[key]
-   puts "easy pace #{easy_in_sec}"
-   
-   short_in_sec = ShortPaceTime.ShortPace()[key]
-   puts "short tempo pace #{short_in_sec}"
-  
-   med_in_sec =  MediumPaceTime.MediumPace()[key]
-   puts "med tempo pace #{med_in_sec}"
-   
-   long_in_sec = LongPaceTime.LongPace()[key]
-   puts "long run pace #{long_in_sec}"
-   
-   @marathon_pace = Time.at(mp_in_sec).gmtime
-   @easy_pace = Time.at(easy_in_sec).gmtime
-   @short_tempo_pace = Time.at(short_in_sec).gmtime
-   @medium_tempo_pace = Time.at(med_in_sec).gmtime
-   @long_tempo_pace = Time.at(long_in_sec).gmtime
-   @marathon_prediction = Time.at(mp_in_sec * 42.2).gmtime
-   puts "marathon_prediction #{@marathon_prediction}"
-   @pace_hash = { "easy"=> @easy_pace, 
-                  "ST"  => @short_tempo_pace, 
-                  "MT"  => @medium_tempo_pace, 
-                  "LT"  => @long_tempo_pace, 
-                  "MP"  => @marathon_pace}
+    
+   @pace = MarathonPaces.create_from_5km_time(fivekmtime)
+   #TODO - hash also probably not needed, espeically if the trainig pace object can handle it?
+   @pace_hash = { "easy"=> @pace.easy, 
+                  "ST"  => @pace.short, 
+                  "MT"  => @pace.medium, 
+                  "LT"  => @pace.long, 
+                  "MP"  => @pace.marathon_pace}
+    
+   @marathon_prediction = Time.at(@pace.marathon_pace.to_i * 42.2).gmtime
+
 
    @weeks = Array.new()
    session16a = create_interval_session  "3 x 1600m (1min. RI)"
@@ -144,7 +122,7 @@ class RunnerData
     modifier_string = if modifier > 0
                         " + #{modifier.to_s} sec/km"
                       end
-    currentSession << "#{working_dist}K @ #{working_pace_key}#{modifier_string} (#{ (@marathon_pace + modifier).strftime('%M:%S') } sec/km)"
+    currentSession << "#{working_dist}K @ #{working_pace_key}#{modifier_string} (#{ (@pace_hash[working_pace_key] + modifier).strftime('%M:%S') } sec/km)"
     currentSession << "#{warmup_dist}K easy" if warmdown_dist > 0
     return currentSession
  end

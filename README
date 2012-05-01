@@ -1,1 +1,6 @@
 A simple Sinatra app that calculates your marathon training program 
+To run :
+ruby -rubygems home.rb
+
+to run test just call the test file eg :
+ruby home_test.rb
