@@ -86,7 +86,7 @@
 		
 		var date = $("#datepicker").datepicker("getDate");
 		var year = date.getFullYear();
-		var month = date.getMonth();
+		var month = date.getMonth() + 1;//http://www.w3schools.com/jsref/jsref_getmonth.asp
 		var day = date.getDate();
 		var href = "./racedate/" + day + "-" + month + "-" + year + "/fivekmtime/" + minutes + "m" + seconds + "s";
 		document.location.href=href;
