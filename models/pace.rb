@@ -1,4 +1,4 @@
-class Pace
+class Pace #Not currently being used - was in progress for half marathon program then realised the marathon code needed alot of work
   attr_reader :time, :minutes, :seconds
   
   def initialize(minutes, seconds)

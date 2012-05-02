@@ -1,5 +1,5 @@
 require_relative "pace.rb"
-
+#Not currently being used - was in progress for half marathon program then realised the marathon code needed alot of work
 class TimeTrial
   MILESCONVERSION = 0.621371192
   attr_reader :distance_in_km, :minutes, :seconds
