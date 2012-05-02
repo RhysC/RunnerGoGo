@@ -1,40 +1,69 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html>
-	<head>
-		<title>Runner Go Go</title>
-		<link rel="stylesheet" type="text/css" href="/css/style.css" title="Default Style"/>
-		<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
-		<script type="text/javascript" src="javascript/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="javascript/jquery-ui-1.8.19.custom.min.js"></script>
-	</head>
-	<body onkeyup="onButton()">
-		<h1>
-			Welcome to Runner Go Go
-		</h1>
-		Let us create a marathon training plan for you. We will need the results from a recent  5km time trial and then we can get started!
-		<br/>
-		<fieldset>
-		<legend>Race plan</legend>
-			Please enter your planned marathon date
-			<input type="text" id="datepicker">
-			<br/>
-		
-			Please enter your 5km time trial result
-			<select name="minute" id="minute">
-				<% (15..29).each do |minute| %>
-				<option value="<%= minute %>"><%= minute %></option>
-				<% end %>
-			</select> minutes
+<%= partial(:header) %>
+
+  	<body onkeyup="onButton()">
+
+   <%= partial(:titlebar) %>
+
+    <div class="container">
+
+      <%= partial(:hero) %>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="well span3">
+          <h2>Marathon Plan</h2>
+			<p>
+				Please enter your planned marathon date :
+			</p>
+			<p>
+				<input type="text" id="datepicker">
+			</p>
+			<p>
+				Please enter your 5km time trial result :
+			</p>
+			<p>
+				<select name="minute" id="minute" class="span1">
+					<% (15..29).each do |minute| %>
+					<option value="<%= minute %>"><%= minute %></option>
+					<% end %>
+				</select> minutes
 		 
-			<select name="second" id="second">
-				<% ((0..59).select {|x| (x % 5) ==0}).each do |second| %>
-				<option value="<%= second %>"><%= second %></option>
-				<% end %>
-			</select> seconds
-			<br/>
-			<button type="button" onclick="create_plan()">Create my plan</button>
-		</fieldset>
-	</body>
+				<select name="second" id="second" class="span1">
+					<% ((0..59).select {|x| (x % 5) ==0}).each do |second| %>
+					<option value="<%= second %>"><%= second %></option>
+					<% end %>
+				</select> seconds
+			</p>
+			<button type="button" class="btn" onclick="create_plan()">Create my plan &raquo;</button>
+        </div>
+        <div class="span4">
+          <h2>Fun Run</h2>
+           <p>Training for a big running event does not have to be boring. The RunnerGoGo plans are designed to be interesting and effective.  Mixed mode trainings allow for reduced training times, reduced injuries and proven results. </p>
+          <p><a class="btn" href="/about">Learn more &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Upcoming events</h2>
+          <p>Check out <a href="http://marathons.ahotu.com/calendar">ahotu.com</a> for a great marathon calendar.</p>
+
+          <p>
+			<a href="http://marathons.ahotu.com">
+		  		<img src="http://s3.amazonaws.com/marathons/media/22/medium/ahotu_marathons_horizontal_black.png" alt="Marathons Calendar">
+			</a>
+		</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Rhys Campbell 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript">
 	$(function() {
 			$("#datepicker").datepicker({ defaultDate: + (7 * 16) }); //default to 16 weeks
@@ -63,5 +92,5 @@
 		document.location.href=href;
 	}
 	</script>
-	
-</html>
+
+<%= partial(:footer) %>

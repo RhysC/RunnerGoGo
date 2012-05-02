@@ -21,7 +21,7 @@ class MyAppTest < Test::Unit::TestCase
   def test_my_default
     get '/'
     assert last_response.ok?
-    assert_match /Welcome to Runner Go Go/, last_response.body
+    assert_match /Welcome to RunnerGoGo/, last_response.body
   end
 
   def test_plan_with_params

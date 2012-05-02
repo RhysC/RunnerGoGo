@@ -3,8 +3,20 @@ require 'sinatra'
 require 'date'
 require_relative './models/runner_data.rb'
 
+helpers do
+  def partial (template, locals = {})
+    erb(template, :layout => false, :locals => locals)
+  end
+end
+
 get '/' do
   erb :home
+end
+get '/about' do
+  erb :about
+end
+get '/contact' do
+  erb :contact
 end
 
 get '/racedate/:racedate/fivekmtime/:fivekmtime' do 
