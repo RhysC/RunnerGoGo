@@ -11,12 +11,13 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="well span3">
-          <h2>Marathon Plan</h2>
+          <section id="plan">
+			<h2>Marathon Plan</h2>
 			<p>
 				Please enter your planned marathon date :
 			</p>
 			<p>
-				<input type="text" id="datepicker">
+				<input type="text" id="datepicker" class="span3">
 			</p>
 			<p>
 				Please enter your 5km time trial result :
@@ -27,7 +28,6 @@
 					<option value="<%= minute %>"><%= minute %></option>
 					<% end %>
 				</select> minutes
-		 
 				<select name="second" id="second" class="span1">
 					<% ((0..59).select {|x| (x % 5) ==0}).each do |second| %>
 					<option value="<%= second %>"><%= second %></option>
@@ -35,7 +35,8 @@
 				</select> seconds
 			</p>
 			<button type="button" class="btn" onclick="create_plan()">Create my plan &raquo;</button>
-        </div>
+          </section>
+		</div>
         <div class="span4">
           <h2>Fun Run</h2>
            <p>Training for a big running event does not have to be boring. The RunnerGoGo plans are designed to be interesting and effective.  Mixed mode trainings allow for reduced training times, reduced injuries and proven results. </p>
@@ -66,10 +67,21 @@
     <!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript">
 	$(function() {
-			$("#datepicker").datepicker({ defaultDate: + (7 * 16) }); //default to 16 weeks
-			var date = $("#datepicker").datepicker("getDate");
-			$("#datepicker").datepicker("setDate", date);
+			setup_datepicker()
+			setup_timedefault()
 	});
+	function setup_datepicker()
+	{
+		$("#datepicker").datepicker({ defaultDate: + (7 * 16) }); //default to 16 weeks
+		var date = $("#datepicker").datepicker("getDate");
+		$("#datepicker").datepicker("setDate", date);
+	}
+	function setup_timedefault()
+	{
+		var index = Math.floor($("#minute").children().size()/2)
+		$('#minute :nth-child(' + index + ')').attr('selected', 'selected')
+	}
+	
 	function onButton()
 	{
 		if (event.keyCode == 13) 

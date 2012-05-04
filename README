@@ -4,3 +4,10 @@ ruby -rubygems home.rb
 
 to run test just call the test file eg :
 ruby home_test.rb
+
+TODO - (synch with github issues)
+*Collapsable historical training
+*Highlight current week in plan
+*header to dynamically show get started from home page
+*half marathon, 5km and 10km plans
+*recommended break in "plan section between "minute" and second selection

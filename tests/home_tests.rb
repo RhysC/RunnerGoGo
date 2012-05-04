@@ -18,16 +18,22 @@ class MyAppTest < Test::Unit::TestCase
     Sinatra::Application
   end
   
-  def test_my_default
+  def test_default_welcome
     get '/'
     assert last_response.ok?
-    assert_match /Welcome to RunnerGoGo/, last_response.body
+    assert_match /Welcome to RunnerGoGo.com/, last_response.body
+  end
+  
+  def test_static_pages_have_hero
+    get '/'
+    assert last_response.ok?
+    assert_match /Ready, Set, GoGo!/, last_response.body
   end
 
   def test_plan_with_params
     get '/racedate/14-05-2012/fivekmtime/21m35s' #, :name => 'Frank'
     assert last_response.ok?, "response is not ok :("
-    assert_match /Marathon date : Mon 14 May 2012/, last_response.body
+    assert_match /Race date : Mon 14 May 2012/, last_response.body
     assert_match /Times are based on the pace of a 5km race at the given pace 04:19/, last_response.body 
   end
   

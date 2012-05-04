@@ -2,7 +2,7 @@ require_relative '../PaceHashes/MarathonPace.rb'
 
 class MarathonPaces
   
-  attr_reader :fivekm_racetime_sec, :marathon_pace
+  attr_reader :fivekm_racetime_sec, :race_pace
    
   def self.create_from_5km_time(five_km_time)
     rounding = five_km_time.to_i % 5 
@@ -13,7 +13,7 @@ class MarathonPaces
   def initialize(fivekm_racepace_in_seconds)
     @fivekm_racetime_sec = fivekm_racepace_in_seconds
     mp_in_sec = MarathonPaceTime.MarathonPace()[fivekm_racepace_in_seconds]
-    @marathon_pace = Time.at(mp_in_sec).gmtime
+    @race_pace = Time.at(mp_in_sec).gmtime
   end
   
   def easy
@@ -37,7 +37,7 @@ class MarathonPaces
              "ST"  => short, 
              "MT"  => medium, 
              "LT"  => long, 
-             "MP"  => marathon_pace
+             "MP"  => race_pace
            }
   end
   #   @pace_hash = { "easy"=> @pace.easy, 

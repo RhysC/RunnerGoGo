@@ -36,3 +36,11 @@ get '/racedate/:racedate/fivekmtime/:fivekmtime' do
     raise
   end
 end
+
+class Button
+  attr_reader :text, :url
+  def initialize(text, url)
+    @text = text
+    @url = url
+  end
+end
