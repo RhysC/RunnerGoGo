@@ -19,7 +19,7 @@ get '/contact' do
   erb :contact
 end
 
-get '/racedate/:racedate/fivekmtime/:fivekmtime' do 
+get '/marathon/:racedate/fivekmtime/:fivekmtime' do 
   begin
     # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
     date = Date.parse(params[:racedate]) #1979-12-27
@@ -27,7 +27,25 @@ get '/racedate/:racedate/fivekmtime/:fivekmtime' do
     #extract the minutes and the seconds - add the minutes (*6) to the seconds and present as Time.at((m*60) + s).gmtime
     mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
     sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
-    @runnerdata = RunnerData.new(date, Time.at((mins*60)+sec).gmtime)
+    @runnerdata = MarathonRunnerData.new(date, Time.at((mins*60)+sec).gmtime)
+    erb :trainingplan
+  rescue Exception => e
+    puts "error with params #{params}"
+    puts e
+    puts e.backtrace
+    raise
+  end
+end
+
+get '/halfmarathon/:racedate/fivekmtime/:fivekmtime' do 
+  begin
+    # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
+    date = Date.parse(params[:racedate]) #1979-12-27
+    fivekmtime = params[:fivekmtime]
+    #extract the minutes and the seconds - add the minutes (*6) to the seconds and present as Time.at((m*60) + s).gmtime
+    mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
+    sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
+    @runnerdata = HalfMarathonRunnerData.new(date, Time.at((mins*60)+sec).gmtime)
     erb :trainingplan
   rescue Exception => e
     puts "error with params #{params}"

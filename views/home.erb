@@ -12,9 +12,9 @@
       <div class="row">
         <div class="well span3">
           <section id="plan">
-			<h2>Marathon Plan</h2>
+			<h2>Training Plan</h2>
 			<p>
-				Please enter your planned marathon date :
+				Please enter your planned race date :
 			</p>
 			<p>
 				<input type="text" id="datepicker" class="span3">
@@ -34,7 +34,16 @@
 					<% end %>
 				</select> seconds
 			</p>
-			<button type="button" class="btn" onclick="create_plan()">Create my plan &raquo;</button>
+			
+			<div class="btn-group">
+			          <a class="btn btn-primary" id="marathon_create" href="#"> Create marathon plan</a>
+			          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+			            <li><a id="half_marathon_create" href="#"> Create half marathon plan</a></li>
+			           <!-- <li><button id="ten_km_create"> Create 10km plan</button></li> -->
+			          </ul>
+			        </div>
+			
           </section>
 		</div>
         <div class="span4">
@@ -67,8 +76,17 @@
     <!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript">
 	$(function() {
+		try{
 			setup_datepicker()
 			setup_timedefault()
+			$("#marathon_create").click(create_marathon_plan)
+			$("#half_marathon_create").click(create_half_marathon_plan)
+			//$("#ten_km_create").click(create_ten_km_plan)
+		}
+		catch(err)
+		{
+			alert(err)
+		}
 	});
 	function setup_datepicker()
 	{
@@ -86,21 +104,36 @@
 	{
 		if (event.keyCode == 13) 
 		{
-			create_plan();
+			create_marathon_plan();
 		}
 	}
-	function create_plan()
+	function create_marathon_plan()
 	{
+		create_plan("marathon")
+	}
+	function create_half_marathon_plan()
+	{
+		create_plan("halfmarathon")
+	}
+	
+	function create_plan(base_url)
+	{
+		//TODO - why is this not jquery like the rest of the js code
 		var minDropDown = document.getElementById("minute");
 		var minutes = minDropDown.options[minDropDown.selectedIndex].value;
 		var secDropDown = document.getElementById("second");
 		var seconds = secDropDown.options[secDropDown.selectedIndex].value;
-		
+	
 		var date = $("#datepicker").datepicker("getDate");
+		if(date === null)
+		{
+			//TODO - set focus on the date picker
+			return; //
+		}
 		var year = date.getFullYear();
 		var month = date.getMonth() + 1;//http://www.w3schools.com/jsref/jsref_getmonth.asp
 		var day = date.getDate();
-		var href = "./racedate/" + day + "-" + month + "-" + year + "/fivekmtime/" + minutes + "m" + seconds + "s";
+		var href = "./" + base_url + "/" + day + "-" + month + "-" + year + "/fivekmtime/" + minutes + "m" + seconds + "s";
 		document.location.href=href;
 	}
 	</script>

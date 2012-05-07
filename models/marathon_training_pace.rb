@@ -32,6 +32,9 @@ class MarathonPaces
     pace = (@fivekm_racetime_sec / 5) +29
     return Time.at(pace).gmtime
   end
+  def race_prediction
+    return Time.at(@race_pace.to_i * 42.2).gmtime
+  end
   def hash()
     return { "easy"=> easy, 
              "ST"  => short, 
@@ -40,9 +43,4 @@ class MarathonPaces
              "MP"  => race_pace
            }
   end
-  #   @pace_hash = { "easy"=> @pace.easy, 
-  #                "ST"  => @pace.short, 
-  #                "MT"  => @pace.medium, 
-  #                "LT"  => @pace.long, 
-  #                "MP"  => @pace.marathon_pace}
 end
