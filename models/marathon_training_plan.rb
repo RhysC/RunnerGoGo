@@ -74,7 +74,7 @@ class MarathonPlan
 
       session3a = create_interval_session "8 x 800m (1:30 RI)"
       session3b = create_tempo_session 0, 8, "MT", 0, 0
-      session3c = create_tempo_session 0, 1, "MP", 9, 0
+      session3c = create_tempo_session 0, 21, "MP", 9, 0
       plan << Week.new(racedate, 3, session3a, session3b, session3c)
 
       session2a = create_interval_session "5 x 1K (400m RI)"
@@ -104,7 +104,7 @@ class MarathonPlan
                           " + #{modifier.to_s} sec/km"
                         end
       currentSession << "#{working_dist}K @ #{working_pace_key}#{modifier_string} (#{ (@pacehash[working_pace_key] + modifier).strftime('%M:%S') } sec/km)"
-      currentSession << "#{warmup_dist}K easy" if warmdown_dist > 0
+      currentSession << "#{warmdown_dist}K easy" if warmdown_dist > 0
       return currentSession
    end
 

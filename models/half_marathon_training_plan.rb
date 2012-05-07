@@ -38,7 +38,7 @@ class HalfMarathonPlan #TODO - miles ->km runs and non compliant tempo runs
       plan << Week.new(racedate, 13, session13a, session13b, session13c)
 
       session12a = create_interval_session  "2 x 1200m (2:00 RI); 4 x 800m (2:00 RI)"
-      session12b = create_tempo_session 1, 2, "MT", 0, 0 #TODO (non conforming session) : 1 mile easy, 2 miles @ MT pace 1 mile easy, 2 miles @ MT pace 1 mile easy
+      session12b = ["1 mile easy", "2 miles @ MT pace (#{ @pacehash['MT'].strftime('%M:%S') } sec/km)", "1 mile easy", "2 miles @ MT pace (#{ @pacehash['MT'].strftime('%M:%S') } sec/km)", "1 mile easy"]
       session12c = create_tempo_session 0, 10, "HMP", 20, 0
       plan << Week.new(racedate, 12, session12a, session12b, session12c)
       
@@ -48,7 +48,7 @@ class HalfMarathonPlan #TODO - miles ->km runs and non compliant tempo runs
       plan << Week.new(racedate, 11, session11a, session11b, session11c)
 
       session10a = create_interval_session  "2 x (6 x 400m) (1:30 RI) (2:30 RI between sets)"
-      session10b = create_tempo_session 1, 2, "MT", 0, 1 #TODO (non conforming session) : 1 mile easy, 2 miles @ MT pace 1 mile easy, 2 miles @ MT pace 1 mile easy
+      session10b = ["1 mile easy", "2 miles @ MT pace (#{ @pacehash['MT'].strftime('%M:%S') } sec/km)", "1 mile easy", "2 miles @ MT pace (#{ @pacehash['MT'].strftime('%M:%S') } sec/km)", "1 mile easy"]
       session10c = create_tempo_session 0, 8, "HMP", 15, 0
       plan << Week.new(racedate, 10, session10a, session10b, session10c)
 
@@ -78,7 +78,7 @@ class HalfMarathonPlan #TODO - miles ->km runs and non compliant tempo runs
       plan << Week.new(racedate, 5, session5a, session5b, session5c)
       
       session4a = create_interval_session  "3 x 2000m (400m RI)"
-      session4b = create_tempo_session 1, 2, "MT", 0, 0 #TODO (non conforming session) : 1 mile easy, 2 miles @ MT pace 1 mile easy, 2 miles @ MT pace 1 mile easy
+      session4b = ["1 mile easy", "2 miles @ MT pace (#{ @pacehash['MT'].strftime('%M:%S') } sec/km)", "1 mile easy", "2 miles @ MT pace (#{ @pacehash['MT'].strftime('%M:%S') } sec/km)", "1 mile easy"]
       session4c = create_tempo_session 0, 10, "HMP", 20, 0
       plan << Week.new(racedate, 4, session4a, session4b, session4c)
 
@@ -118,7 +118,7 @@ class HalfMarathonPlan #TODO - miles ->km runs and non compliant tempo runs
       raise "key #{working_pace_key} does not extist in pace hash"    
     end         
     currentSession << "#{working_dist} Miles @ #{working_pace_key}#{modifier_string} (#{ (@pacehash[working_pace_key] + modifier).strftime('%M:%S') } sec/km)"
-    currentSession << "#{warmup_dist} Miles easy" if warmdown_dist > 0
+    currentSession << "#{warmdown_dist} Miles easy" if warmdown_dist > 0
     return currentSession
   end
 
