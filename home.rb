@@ -20,33 +20,25 @@ get '/contact' do
 end
 
 get '/marathon/:racedate/fivekmtime/:fivekmtime' do 
-  begin
-    # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
-    date = Date.parse(params[:racedate]) #1979-12-27
-    fivekmtime = params[:fivekmtime]
-    #extract the minutes and the seconds - add the minutes (*6) to the seconds and present as Time.at((m*60) + s).gmtime
-    mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
-    sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
-    @runnerdata = MarathonRunnerData.new(date, Time.at((mins*60)+sec).gmtime)
-    erb :trainingplan
-  rescue Exception => e
-    puts "error with params #{params}"
-    puts e
-    puts e.backtrace
-    raise
-  end
+  @runnerdata = get_runner_data{ |date, time| MarathonRunnerData.new(date, time) }
+  erb :trainingplan
 end
 
 get '/halfmarathon/:racedate/fivekmtime/:fivekmtime' do 
+  @runnerdata = get_runner_data{ |date, time| HalfMarathonRunnerData.new(date, time) }
+  erb :trainingplan
+end
+
+
+def get_runner_data(&data_factory)
   begin
     # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
     date = Date.parse(params[:racedate]) #1979-12-27
-    fivekmtime = params[:fivekmtime]
     #extract the minutes and the seconds - add the minutes (*6) to the seconds and present as Time.at((m*60) + s).gmtime
+    fivekmtime = params[:fivekmtime]
     mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
     sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
-    @runnerdata = HalfMarathonRunnerData.new(date, Time.at((mins*60)+sec).gmtime)
-    erb :trainingplan
+    return data_factory.call(date, Time.at((mins*60)+sec).gmtime)
   rescue Exception => e
     puts "error with params #{params}"
     puts e
@@ -54,8 +46,9 @@ get '/halfmarathon/:racedate/fivekmtime/:fivekmtime' do
     raise
   end
 end
+  
 
-class Button
+class Button #TODO am i actually used anymore?
   attr_reader :text, :url
   def initialize(text, url)
     @text = text
