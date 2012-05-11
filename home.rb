@@ -5,7 +5,14 @@ require_relative './models/runner_data.rb'
 
 helpers do
   def partial (template, locals = {})
-    erb(template, :layout => false, :locals => locals)
+    begin
+      erb(template, :layout => false, :locals => locals)
+    rescue Exception => e
+      puts "error rendering partial with params #{locals}"
+      puts e
+      puts e.backtrace
+      raise
+    end
   end
 end
 
@@ -48,10 +55,10 @@ def get_runner_data(&data_factory)
 end
   
 
-class Button #TODO am i actually used anymore?
-  attr_reader :text, :url
-  def initialize(text, url)
+class Button 
+  attr_reader :text, :id
+  def initialize(id, text)
     @text = text
-    @url = url
+    @id = id
   end
 end

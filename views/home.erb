@@ -1,12 +1,6 @@
-<%= partial(:header) %>
-
-  	<body onkeyup="onButton()">
-
-   <%= partial(:titlebar) %>
-
     <div class="container">
 
-      <%= partial(:hero) %>
+      <%= partial(:hero, {:buttons => [Button.new("get_started", "Get started &raquo;")] }) %>
 
       <!-- Example row of columns -->
       <div class="row">
@@ -63,11 +57,7 @@
         </div>
       </div>
 
-      <hr>
-
-      <footer>
-        <p>&copy; Rhys Campbell 2012</p>
-      </footer>
+    <%= partial(:footer) %>
 
     </div> <!-- /container -->
 
@@ -76,17 +66,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript">
 	$(function() {
-		try{
-			setup_datepicker()
-			setup_timedefault()
-			$("#marathon_create").click(create_marathon_plan)
-			$("#half_marathon_create").click(create_half_marathon_plan)
-			//$("#ten_km_create").click(create_ten_km_plan)
-		}
-		catch(err)
-		{
-			alert(err)
-		}
+		setup_datepicker()
+		setup_timedefault()
+		$("#marathon_create").click(create_marathon_plan)
+		$("#half_marathon_create").click(create_half_marathon_plan)
+		$("#get_started").click( function(){ $("#datepicker").focus() })
 	});
 	function setup_datepicker()
 	{
@@ -98,14 +82,6 @@
 	{
 		var index = Math.floor($("#minute").children().size()/2)
 		$('#minute :nth-child(' + index + ')').attr('selected', 'selected')
-	}
-	
-	function onButton()
-	{
-		if (event.keyCode == 13) 
-		{
-			create_marathon_plan();
-		}
 	}
 	function create_marathon_plan()
 	{
@@ -137,5 +113,3 @@
 		document.location.href=href;
 	}
 	</script>
-
-<%= partial(:footer) %>
