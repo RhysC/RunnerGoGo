@@ -1,19 +1,20 @@
     <div class="container">
 
-      <%= partial(:hero, {:buttons => [Button.new("get_started", "Get started &raquo;")] }) %>
+      <%= partial(:"partials/hero", {:buttons => [Button.new("get_started", "Get started &raquo;")] }) %>
 
       <div class="row">
         <div class="well span3">
           <section id="plan">
 			<h2>Training Plan</h2>
+			<!-- TODO ensure labels keep with input -->
 			<p>
-				Please enter your planned race date :
+				Please enter your planned race date
 			</p>
 			<p>
 				<input type="text" id="datepicker" class="span3">
 			</p>
 			<p>
-				Please enter your 5km time trial result :
+				Please enter your 5km time trial result
 			</p>
 			<p>
 				<select name="minute" id="minute" class="span1">
@@ -56,7 +57,7 @@
         </div>
       </div>
 
-    <%= partial(:footer) %>
+    <%= partial(:"partials/footer") %>
 
     </div> <!-- /container -->
 	<script src="/js/home.js"></script>

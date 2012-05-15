@@ -17,23 +17,23 @@ helpers do
 end
 
 get '/' do
-  erb :home
+  erb :"pages/home"
 end
 get '/about' do
-  erb :about
+  erb :"pages/about"
 end
 get '/contact' do
-  erb :contact
+  erb :"pages/contact"
 end
 
 get '/marathon/:racedate/fivekmtime/:fivekmtime' do 
   @runnerdata = get_runner_data{ |date, time| MarathonRunnerData.new(date, time) }
-  erb :trainingplan
+  erb :"pages/trainingplan"
 end
 
 get '/halfmarathon/:racedate/fivekmtime/:fivekmtime' do 
   @runnerdata = get_runner_data{ |date, time| HalfMarathonRunnerData.new(date, time) }
-  erb :trainingplan
+  erb :"pages/trainingplan"
 end
 
 

@@ -27,16 +27,12 @@ function create_half_marathon_plan()
 
 function create_plan(base_url)
 {
-	//TODO - why is this not jquery like the rest of the js code
-	var minDropDown = document.getElementById("minute");
-	var minutes = minDropDown.options[minDropDown.selectedIndex].value;
-	var secDropDown = document.getElementById("second");
-	var seconds = secDropDown.options[secDropDown.selectedIndex].value;
-
+	var minutes = $("#minute").val();
+	var seconds = $("#second").val();
 	var date = $("#datepicker").datepicker("getDate");
 	if(date === null)
 	{
-		//TODO - set focus on the date picker
+		$("#datepicker").focus();
 		return; //
 	}
 	var year = date.getFullYear();
