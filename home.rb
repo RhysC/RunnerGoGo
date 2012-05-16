@@ -27,12 +27,12 @@ get '/contact' do
 end
 
 get '/marathon/:racedate/fivekmtime/:fivekmtime' do 
-  @runnerdata = get_runner_data{ |date, time| MarathonRunnerData.new(date, time) }
+  @runnerdata = get_runner_data{ |date, time| RunnerData.new(date, time, MarathonStrategy.new()) }
   erb :"pages/trainingplan"
 end
 
 get '/halfmarathon/:racedate/fivekmtime/:fivekmtime' do 
-  @runnerdata = get_runner_data{ |date, time| HalfMarathonRunnerData.new(date, time) }
+  @runnerdata = get_runner_data{ |date, time| RunnerData.new(date, time, HalfMarathonStrategy.new()) }
   erb :"pages/trainingplan"
 end
 
