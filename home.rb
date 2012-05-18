@@ -41,17 +41,21 @@ def get_runner_data(&data_factory)
   begin
     # "racedate #{params[:racedate]} five km pace #{params[:fivekmpace]}"
     date = Date.parse(params[:racedate]) #1979-12-27
-    #extract the minutes and the seconds - add the minutes (*6) to the seconds and present as Time.at((m*60) + s).gmtime
-    fivekmtime = params[:fivekmtime]
-    mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
-    sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
-    return data_factory.call(date, Time.at((mins*60)+sec).gmtime)
+    pace_in_seconds = get_pace(params[:fivekmtime])
+    return data_factory.call(date, pace_in_seconds)
   rescue Exception => e
     puts "error with params #{params}"
     puts e
     puts e.backtrace
     raise
   end
+end
+
+def get_pace(fivekmtime)
+  #extract the minutes and the seconds - add the minutes (*6) to the seconds and present as Time.at((m*60) + s).gmtime
+  mins = fivekmtime.scan(/[0-9]+(?=m)/)[0].to_i
+  sec = fivekmtime.scan(/[0-9]+(?=s)/)[0].to_i
+  return Time.at((mins*60)+sec).gmtime
 end
   
 

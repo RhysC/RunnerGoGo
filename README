@@ -5,6 +5,9 @@ ruby -rubygems home.rb
 to run test just call the test file eg :
 ruby home_test.rb
 
+Note to rhys : make sure you are using the right gemset 
+	rvm gemset use sinatra
+
 TODO - (synch with github issues)
 *header to dynamically show get started from home page
 *5km and 10km plans
