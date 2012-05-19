@@ -43,9 +43,9 @@ class MyAppTest < Test::Unit::TestCase
     end
   end
   
-  def test_all_5km_run_times_between_15_and_30_minutes
+  def test_all_5km_run_times_between_15_and_40_minutes
     plans.each do | plan |
-      (15..29).each do |minute| 
+      settings.pace_range.each do |minute| 
         ((0..59).select {|x| (x % 5) ==0}).each do |second| 
           get "/#{plan}/14-05-2012/fivekmtime/#{minute}m#{second}s" #, :name => 'Frank'
           assert last_response.ok?, "response is not ok :("

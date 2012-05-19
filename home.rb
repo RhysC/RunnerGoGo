@@ -3,6 +3,8 @@ require 'sinatra'
 require 'date'
 require_relative './models/runner_data.rb'
 
+set :pace_range, (15..39)
+
 helpers do
   def partial (template, locals = {})
     begin

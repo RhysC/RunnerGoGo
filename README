@@ -9,6 +9,5 @@ Note to rhys : make sure you are using the right gemset
 	rvm gemset use sinatra
 
 TODO - (synch with github issues)
-*header to dynamically show get started from home page
 *5km and 10km plans
 *recommended break in "plan section between "minute" and second selection

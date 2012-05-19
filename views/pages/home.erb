@@ -18,7 +18,7 @@
 			</p>
 			<p>
 				<select name="minute" id="minute" class="span1">
-					<% (15..29).each do |minute| %>
+					<% settings.pace_range.each do |minute| %>
 					<option value="<%= minute %>"><%= minute %></option>
 					<% end %>
 				</select> minutes
